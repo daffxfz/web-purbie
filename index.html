@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Official Web Store Purbie</title>
+    <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple-dark: #251B60;
+            --purple-main: #6C3483;
+            --purple-mid: #9B59B6;
+            --pink-accent: #F472D0;
+            --pink-soft: #FFEAF7;
+            --yellow-pastel: #FFFF99;
+            --cream-bg: #FFFDF5;
+            --accent-yellow: #FFC300;
+            --text-dark: #1E164B;
+            --text-muted: #5E548E;
+            --success-green: #25D366;
+            --shadow-card: 0 12px 28px rgba(37, 27, 96, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--cream-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* AUTO-CROP LOGO.PNG (Hanya Mengambil Oval Putih Tanpa Background Pink) */
+        .logo-crop {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 999px;
+            aspect-ratio: 495 / 340;
+            background: #FFFFF2;
+            border: 2px solid var(--purple-dark);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+        }
+
+        .logo-crop img {
+            width: 203%;
+            height: auto;
+            max-width: none;
+            display: block;
+            pointer-events: none;
+        }
+
+        .logo-crop.nav-size {
+            width: 68px;
+        }
+
+        .logo-crop.hero-size {
+            width: 145px;
+            margin-bottom: 14px;
+            border-width: 3px;
+        }
+
+        /* Navbar */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(37, 27, 96, 0.96);
+            backdrop-filter: blur(10px);
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.45rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow-pastel);
+        }
+
+        .cart-badge-btn {
+            background: var(--yellow-pastel);
+            color: var(--purple-dark);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+            white-space: nowrap;
+        }
+
+        .cart-badge-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Sub-navigasi khusus Smartphone */
+        .mobile-quick-nav {
+            display: none;
+            background: #1B1347;
+            padding: 8px 4%;
+            justify-content: center;
+            gap: 18px;
+            border-bottom: 2px solid var(--pink-accent);
+            position: sticky;
+            top: 66px;
+            z-index: 999;
+        }
+
+        .mobile-quick-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-quick-nav a:active {
+            background: var(--pink-accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(180deg, var(--yellow-pastel) 0%, #FFFFFF 55%, var(--pink-soft) 100%);
+            color: var(--purple-dark);
+            padding: 50px 5% 75px;
+            text-align: center;
+            position: relative;
+            border-bottom: 6px solid var(--pink-accent);
+        }
+
+        .bazaar-pill {
+            display: inline-block;
+            background: var(--purple-dark);
+            color: var(--yellow-pastel);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.1rem, 5vw, 3.8rem);
+            line-height: 1.15;
+            margin-bottom: 14px;
+            color: var(--purple-dark);
+        }
+
+        .hero h1 span {
+            color: var(--pink-accent);
+            text-shadow: 2px 2px 0px var(--purple-dark);
+        }
+
+        .hero p.tagline {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 620px;
+            margin: 0 auto 26px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--purple-dark);
+            color: var(--yellow-pastel);
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.12rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 0 var(--pink-accent);
+            transition: all 0.15s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(2px);
+            box-shadow: 0 4px 0 var(--pink-accent);
+        }
+
+        /* Info Strip (4 Kolom: Tanggal, Lokasi, Jam Operasional, Pembayaran) */
+        .info-strip {
+            max-width: 1120px;
+            margin: -38px auto 45px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 22px 26px;
+            box-shadow: var(--shadow-card);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            position: relative;
+            z-index: 10;
+            border: 2px solid var(--pink-accent);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-icon {
+            width: 46px;
+            height: 46px;
+            background: var(--pink-soft);
+            color: var(--purple-dark);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .info-text h4 {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .info-text p {
+            font-weight: 700;
+            color: var(--purple-dark);
+            font-size: 0.92rem;
+            line-height: 1.3;
+        }
+
+        /* Section Layout */
+        section {
+            padding: 40px 5%;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 34px;
+        }
+
+        .section-title h2 {
+            font-size: 2.1rem;
+            color: var(--purple-dark);
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 0.95rem;
+        }
+
+        /* About Box + Interactive Cutout Product Carousel */
+        .about-box {
+            background: linear-gradient(135deg, var(--pink-soft), #fff);
+            border: 2px solid var(--pink-accent);
+            border-radius: 24px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.7rem;
+            color: var(--purple-dark);
+            margin-bottom: 12px;
+        }
+
+        .about-features {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .feature-chip {
+            background: #fff;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--purple-dark);
+            border-left: 4px solid var(--pink-accent);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+        }
+
+        /* 
+         * SLIDER TANPA BACKGROUND (Hanya Kaca Oval, Gabin, dan Teks Highlight Pink)
+         */
+        .about-carousel-wrapper {
+            background: transparent;
+            border: none;
+            padding: 6px 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            user-select: none;
+        }
+
+        .carousel-viewport {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0 6px;
+        }
+
+        /* Pembungkus dengan efek bayangan mengikuti bentuk potongan Kaca + Gabin + Teks */
+        .cutout-stage {
+            width: 255px;
+            height: 255px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 12px 16px rgba(37, 27, 96, 0.22));
+            overflow: visible;
+        }
+
+        .cutout-stage img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* Memperbesar tampilan objek hasil crop agar tampak jelas & proporsional */
+            transform: scale(1.68) translate(-1%, 0%);
+            pointer-events: none;
+        }
+
+        /* Menerapkan Clip-Path presisi untuk masing-masing gambar (Kaca + Gabin + Highlight Text) */
+        .clip-original {
+            clip-path: url(#mask-original);
+            -webkit-clip-path: url(#mask-original);
+        }
+
+        .clip-cheese {
+            clip-path: url(#mask-cheese);
+            -webkit-clip-path: url(#mask-cheese);
+        }
+
+        .clip-chocolate {
+            clip-path: url(#mask-chocolate);
+            -webkit-clip-path: url(#mask-chocolate);
+        }
+
+        .clip-greentea {
+            clip-path: url(#mask-greentea);
+            -webkit-clip-path: url(#mask-greentea);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 46%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: var(--purple-dark);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.22);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .carousel-btn:hover {
+            background: var(--pink-accent);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .carousel-btn.prev {
+            left: 4px;
+        }
+
+        .carousel-btn.next {
+            right: 4px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 6px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: rgba(37, 27, 96, 0.25);
+            cursor: pointer;
+            transition: all 0.25s;
+            border: none;
+        }
+
+        .dot.active {
+            width: 24px;
+            border-radius: 20px;
+            background: var(--purple-dark);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            border: 2px solid #F0E6FF;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--pink-accent);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--purple-dark);
+            color: var(--yellow-pastel);
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+
+        .flavor-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--pink-accent);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 11px;
+            border-radius: 50px;
+            z-index: 2;
+        }
+
+        .product-img-wrapper {
+            width: 100%;
+            height: 220px;
+            background: var(--yellow-pastel);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.22);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-img-wrapper img {
+            transform: scale(1.3);
+        }
+
+        .product-body {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-body h3 {
+            font-size: 1.25rem;
+            color: var(--purple-dark);
+            margin-bottom: 6px;
+        }
+
+        .product-body p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        /* Quantity Controls */
+        .qty-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--pink-soft);
+            padding: 6px 10px;
+            border-radius: 14px;
+        }
+
+        .qty-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: none;
+            background: var(--purple-dark);
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover, .qty-btn:active {
+            background: var(--pink-accent);
+        }
+
+        .qty-val {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--purple-dark);
+        }
+
+        /* Order Form Section */
+        .order-container {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 28px;
+            background: #fff;
+            padding: 32px;
+            border-radius: 26px;
+            box-shadow: var(--shadow-card);
+            border: 2px solid var(--pink-accent);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--purple-dark);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 2px solid #E5D4FF;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            background: var(--cream-bg);
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--purple-dark);
+        }
+
+        /* Order Summary Box */
+        .summary-box {
+            background: var(--purple-dark);
+            color: #fff;
+            padding: 26px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .summary-box h3 {
+            font-size: 1.45rem;
+            color: var(--yellow-pastel);
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding-bottom: 10px;
+        }
+
+        .cart-list {
+            list-style: none;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.2);
+            font-size: 0.92rem;
+        }
+
+        .cart-empty {
+            color: #D6C9FF;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding-top: 14px;
+            border-top: 2px solid var(--yellow-pastel);
+            margin-bottom: 18px;
+        }
+
+        .total-row span:last-child {
+            color: var(--yellow-pastel);
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.55rem;
+        }
+
+        .btn-wa {
+            width: 100%;
+            background: var(--success-green);
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 14px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.08rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 0 #1DA851;
+            transition: all 0.15s;
+        }
+
+        .btn-wa:hover {
+            transform: translateY(2px);
+            box-shadow: 0 4px 0 #1DA851;
+        }
+
+        /* Floating Mobile Sticky Checkout Bar */
+        .mobile-sticky-cart {
+            display: none;
+            position: fixed;
+            bottom: 14px;
+            left: 4%;
+            right: 4%;
+            background: var(--purple-dark);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 16px;
+            z-index: 1500;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+            border: 2px solid var(--yellow-pastel);
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-sticky-cart.show {
+            display: flex;
+        }
+
+        .mobile-sticky-info span {
+            display: block;
+            font-size: 0.78rem;
+            color: #D6C9FF;
+        }
+
+        .mobile-sticky-info strong {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.15rem;
+            color: var(--yellow-pastel);
+        }
+
+        .mobile-sticky-btn {
+            background: var(--pink-accent);
+            color: #fff;
+            text-decoration: none;
+            padding: 9px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--purple-dark);
+            color: #fff;
+            text-align: center;
+            padding: 40px 5% 45px;
+            margin-top: 50px;
+            border-top: 5px solid var(--pink-accent);
+        }
+
+        .footer-store-badge {
+            display: inline-block;
+            background: rgba(255, 255, 153, 0.15);
+            border: 1px solid var(--yellow-pastel);
+            color: var(--yellow-pastel);
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        footer a {
+            color: var(--yellow-pastel);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .footer-divider {
+            max-width: 450px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 18px auto;
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #C5B8F0;
+        }
+
+        /* RESPONSIVE BREAKPOINTS (Tablet & Smartphone) */
+        @media (max-width: 992px) {
+            .info-strip {
+                grid-template-columns: repeat(2, 1fr);
+                margin: -28px 4% 35px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .about-box {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            header {
+                padding: 10px 4%;
+            }
+            .logo-crop.nav-size {
+                width: 56px;
+            }
+            .logo-link {
+                font-size: 1.2rem;
+                gap: 8px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .mobile-quick-nav {
+                display: flex;
+            }
+            .cart-badge-btn {
+                padding: 7px 13px;
+                font-size: 0.82rem;
+            }
+            .hero {
+                padding: 36px 4% 60px;
+            }
+            .logo-crop.hero-size {
+                width: 120px;
+            }
+            .bazaar-pill {
+                font-size: 0.78rem;
+                padding: 5px 14px;
+            }
+            .hero p.tagline {
+                font-size: 0.95rem;
+            }
+            .info-strip {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding: 18px 20px;
+                margin: -25px 4% 30px;
+            }
+            section {
+                padding: 30px 4%;
+            }
+            .section-title h2 {
+                font-size: 1.75rem;
+            }
+            .about-box {
+                padding: 22px 18px;
+                gap: 22px;
+            }
+            .about-text h3 {
+                font-size: 1.4rem;
+            }
+            .about-features {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .cutout-stage {
+                width: 225px;
+                height: 225px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .product-img-wrapper {
+                height: 155px;
+            }
+            .flavor-tag {
+                font-size: 0.62rem;
+                padding: 3px 8px;
+                top: 8px;
+                left: 8px;
+            }
+            .price-badge {
+                font-size: 0.95rem;
+                padding: 3px 10px;
+                top: 8px;
+                right: 8px;
+            }
+            .product-body {
+                padding: 12px;
+            }
+            .product-body h3 {
+                font-size: 1rem;
+            }
+            .product-body p {
+                font-size: 0.78rem;
+                line-height: 1.4;
+                margin-bottom: 12px;
+            }
+            .qty-control {
+                padding: 4px 6px;
+            }
+            .qty-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 1.1rem;
+            }
+            .qty-val {
+                font-size: 1.05rem;
+            }
+            .order-container {
+                grid-template-columns: 1fr;
+                padding: 20px 16px;
+                gap: 22px;
+            }
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 16px;
+            }
+            footer {
+                padding-bottom: 90px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 
+      DEFINISI MASKING SVG PRESISI UNTUK MENGHILANGKAN BACKGROUND KUNING-PUTIH
+      Menggabungkan bentuk:
+      1. Kaca Oval Biru (<ellipse>)
+      2. Kotak Highlight Teks Pink (<rect>)
+      3. Ujung Kue Gabin Kanan yang Menonjol Keluar (<path>)
+    -->
+    <svg width="0" height="0" style="position: absolute; pointer-events: none;" aria-hidden="true">
+        <defs>
+            <!-- Masking untuk Original.png -->
+            <clipPath id="mask-original" clipPathUnits="objectBoundingBox">
+                <ellipse cx="0.454" cy="0.500" rx="0.186" ry="0.237" />
+                <rect x="0.287" y="0.631" width="0.335" height="0.105" rx="0.004" />
+                <path d="M 0.560,0.365 L 0.605,0.392 Q 0.675,0.445 0.733,0.515 Q 0.742,0.530 0.734,0.546 L 0.715,0.570 L 0.692,0.598 Q 0.682,0.606 0.668,0.598 L 0.610,0.560 Z" />
+            </clipPath>
+
+            <!-- Masking untuk Cheese.png -->
+            <clipPath id="mask-cheese" clipPathUnits="objectBoundingBox">
+                <ellipse cx="0.464" cy="0.4985" rx="0.191" ry="0.2435" />
+                <rect x="0.297" y="0.620" width="0.340" height="0.106" rx="0.004" />
+                <path d="M 0.565,0.365 L 0.612,0.395 Q 0.680,0.448 0.732,0.515 Q 0.740,0.530 0.732,0.546 L 0.713,0.570 L 0.690,0.598 Q 0.678,0.606 0.664,0.598 L 0.612,0.560 Z" />
+            </clipPath>
+
+            <!-- Masking untuk Chocolate.png -->
+            <clipPath id="mask-chocolate" clipPathUnits="objectBoundingBox">
+                <ellipse cx="0.4745" cy="0.4995" rx="0.1995" ry="0.2475" />
+                <rect x="0.300" y="0.622" width="0.345" height="0.109" rx="0.004" />
+                <path d="M 0.580,0.360 L 0.630,0.390 Q 0.705,0.445 0.764,0.515 Q 0.774,0.530 0.766,0.546 L 0.745,0.570 L 0.720,0.598 Q 0.708,0.606 0.692,0.598 L 0.630,0.555 Z" />
+            </clipPath>
+
+            <!-- Masking untuk Greentea.png -->
+            <clipPath id="mask-greentea" clipPathUnits="objectBoundingBox">
+                <ellipse cx="0.4605" cy="0.4995" rx="0.1875" ry="0.2355" />
+                <rect x="0.288" y="0.634" width="0.337" height="0.099" rx="0.004" />
+                <path d="M 0.565,0.360 L 0.610,0.390 Q 0.682,0.442 0.738,0.510 Q 0.746,0.525 0.738,0.542 L 0.720,0.565 L 0.696,0.592 Q 0.684,0.600 0.670,0.592 L 0.612,0.555 Z" />
+            </clipPath>
+        </defs>
+    </svg>
+
+    <!-- NAVBAR -->
+    <header>
+        <a href="#" class="logo-link brand-font">
+            <div class="logo-crop nav-size">
+                <img src="Logo.png" alt="Logo Purbie">
+            </div>
+            <span>@purbie._</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#tentang">Tentang Purbie</a></li>
+            <li><a href="#menu">Varian Rasa</a></li>
+            <li><a href="#pesan">Pesan Sekarang</a></li>
+        </ul>
+        <a href="#pesan" class="cart-badge-btn">
+            🛒 Keranjang (<span id="nav-cart-count">0</span>)
+        </a>
+    </header>
+
+    <!-- SUB-NAVIGASI CEPAT KHUSUS SMARTPHONE -->
+    <nav class="mobile-quick-nav">
+        <a href="#tentang">Tentang Purbie</a>
+        <a href="#menu">Varian Menu</a>
+        <a href="#pesan">Form Pesanan</a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" style="max-width: 100%;">
+        <div>
+            <div class="logo-crop hero-size">
+                <img src="Logo.png" alt="Logo Purbie">
+            </div>
+        </div>
+        <div class="bazaar-pill">✨ Sweet, Crispy, and Purplelicious ✨</div>
+        <h1>Get Yours Now, <span>Purbiestar!</span></h1>
+        <p class="tagline">
+            "Sweet, crispy, and purplelicious!"<br>
+            Perpaduan biskuit gabin renyah dengan olahan ubi ungu asli yang lembut & lumer di mulut.
+        </p>
+        <a href="#menu" class="btn-primary">Pilih Varian Gabin 👇</a>
+    </section>
+
+    <!-- BAZAAR INFO STRIP -->
+    <div class="info-strip">
+        <div class="info-item">
+            <div class="info-icon">📅</div>
+            <div class="info-text">
+                <h4>Tanggal Bazaar</h4>
+                <p>10 – 11 November 2026</p>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="info-icon">📍</div>
+            <div class="info-text">
+                <h4>Lokasi Bazaar</h4>
+                <p>Parkiran Mobil Listrik dekat Landmark PNJ</p>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="info-icon">⏰</div>
+            <div class="info-text">
+                <h4>Jam Operasional</h4>
+                <p>08:00 – 15:00 WIB</p>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="info-icon">💳</div>
+            <div class="info-text">
+                <h4>Pembayaran</h4>
+                <p>Cash & QRIS</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TENTANG PRODUK (Slider Otomatis Tanpa Background: Hanya Kaca, Gabin, dan Teks Highlight) -->
+    <section id="tentang">
+        <div class="about-box">
+            <div class="about-text">
+                <h3>Kenapa Harus Gabin Ubi Ungu @purbie._?</h3>
+                <p>
+                    <strong>Purbie</strong> menghadirkan camilan klasik <em>Kue Gabin</em> dengan sentuhan modern berbahan dasar <strong>100% Ubi Ungu Pilihan</strong>. Digoreng hingga keemasan sehingga menghasilkan tekstur luar yang <em>crispy</em> tanpa menyerap banyak minyak, dipadukan dengan fla ubi ungu yang padat, manis pas, dan berbagai isian lumer di tengahnya!
+                </p>
+                <div class="about-features">
+                    <div class="feature-chip">🍠 100% Ubi Ungu Asli</div>
+                    <div class="feature-chip">🍘 Crispy di Luar, Lembut di Dalam</div>
+                    <div class="feature-chip">🧀 Isian Lumer Melimpah</div>
+                    <div class="feature-chip">💸 Harga Ramah Kantong</div>
+                </div>
+            </div>
+
+            <!-- SLIDER OTOMATIS & INTERAKTIF 4 VARIAN GABIN (TANPA BACKGROUND) -->
+            <div class="about-carousel-wrapper" id="about-carousel">
+                <button class="carousel-btn prev" onclick="moveSlide(-1)" aria-label="Sebelumnya">❮</button>
+                <button class="carousel-btn next" onclick="moveSlide(1)" aria-label="Selanjutnya">❯</button>
+
+                <div class="carousel-viewport" id="carousel-viewport">
+                    <div class="carousel-track" id="carousel-track">
+                        <div class="carousel-slide">
+                            <div class="cutout-stage">
+                                <img src="Original.png" class="clip-original" alt="Gabin Original">
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="cutout-stage">
+                                <img src="Cheese.png" class="clip-cheese" alt="Gabin Cheese">
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="cutout-stage">
+                                <img src="Chocolate.png" class="clip-chocolate" alt="Gabin Chocolate">
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="cutout-stage">
+                                <img src="Greentea.png" class="clip-greentea" alt="Gabin Green Tea">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-dots" id="carousel-dots">
+                    <button class="dot active" onclick="goToSlide(0)" aria-label="Slide 1"></button>
+                    <button class="dot" onclick="goToSlide(1)" aria-label="Slide 2"></button>
+                    <button class="dot" onclick="goToSlide(2)" aria-label="Slide 3"></button>
+                    <button class="dot" onclick="goToSlide(3)" aria-label="Slide 4"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KATALOG MENU PRODUK -->
+    <section id="menu">
+        <div class="section-title">
+            <h2>Varian Rasa Purbie</h2>
+            <p>Klik tombol <strong>(+)</strong> pada varian Gabin Ubi Ungu favoritmu untuk memasukkan ke dalam daftar pesanan.</p>
+        </div>
+
+        <div class="product-grid" id="product-list">
+            <!-- Produk di-render otomatis dari JavaScript -->
+        </div>
+    </section>
+
+    <!-- FORM PEMESANAN WHATSAPP -->
+    <section id="pesan">
+        <div class="section-title">
+            <h2>Form Pemesanan Cepat</h2>
+            <p>Pesan sekarang dan ambil pesananmu di <strong>Parkiran Mobil Listrik dekat Landmark PNJ</strong>!</p>
+        </div>
+
+        <div class="order-container">
+            <div>
+                <div class="form-group">
+                    <label for="buyer-name">Nama Lengkap Pemesan *</label>
+                    <input type="text" id="buyer-name" placeholder="Masukkan nama lengkap Anda" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pickup-time">Estimasi Jam Pengambilan *</label>
+                    <select id="pickup-time">
+                        <option value="08:00 - 09:00 WIB">08:00 - 09:00 WIB</option>
+                        <option value="09:00 - 10:00 WIB">09:00 - 10:00 WIB</option>
+                        <option value="10:00 - 11:00 WIB">10:00 - 11:00 WIB</option>
+                        <option value="11:00 - 12:00 WIB">11:00 - 12:00 WIB</option>
+                        <option value="12:00 - 13:00 WIB">12:00 - 13:00 WIB</option>
+                        <option value="13:00 - 14:00 WIB">13:00 - 14:00 WIB</option>
+                        <option value="14:00 - 15:00 WIB">14:00 - 15:00 WIB</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment-method">Metode Pembayaran *</label>
+                    <select id="payment-method">
+                        <option value="Cash">Cash</option>
+                        <option value="QRIS">QRIS</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="admin-contact">Pilih Admin WhatsApp Tujuan *</label>
+                    <select id="admin-contact">
+                        <option value="6288210795983">Admin 1 - Ayu (0882-1079-5983)</option>
+                        <option value="6282376263454">Admin 2 - Liyna (0823-7626-3454)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="buyer-notes">Catatan Tambahan (Opsional)</label>
+                    <textarea id="buyer-notes" rows="2" placeholder="Contoh: Jangan lupa pisahkan plastik varian coklat ya kak"></textarea>
+                </div>
+            </div>
+
+            <!-- Ringkasan Pesanan -->
+            <div class="summary-box">
+                <div>
+                    <h3>🧾 Ringkasan Pesanan</h3>
+                    <ul class="cart-list" id="cart-summary-list">
+                        <li class="cart-empty">Belum ada varian gabin yang dipilih. Silakan klik tombol (+) pada menu di atas.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="total-row">
+                        <span>Total Bayar:</span>
+                        <span id="cart-total-price">Rp 0</span>
+                    </div>
+                    <button type="button" class="btn-wa" onclick="sendOrderToWhatsApp()">
+                        💬 Kirim Pesanan ke WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLOATING BAR KHUSUS SMARTPHONE SAAT ADA ITEM DI KERANJANG -->
+    <div class="mobile-sticky-cart" id="mobile-sticky-cart">
+        <div class="mobile-sticky-info">
+            <span id="mobile-cart-items">0 Produk Dipilih</span>
+            <strong id="mobile-cart-total">Rp 0</strong>
+        </div>
+        <a href="#pesan" class="mobile-sticky-btn">Lanjut Pesan 👇</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-store-badge">Official Web Store Purbie</div>
+        <p class="brand-font" style="font-size: 1.45rem; color: var(--yellow-pastel); margin-bottom: 6px;">
+            @purbie._ — Sweet, Crispy, and Purplelicious!
+        </p>
+        <p style="margin-top: 8px; font-size: 0.9rem;">
+            Hubungi Kami: 
+            <a href="https://wa.me/6288210795983" target="_blank">088210795983 (Ayu)</a> | 
+            <a href="https://wa.me/6282376263454" target="_blank">082376263454 (Liyna)</a>
+        </p>
+        <div class="footer-divider"></div>
+        <p class="copyright">
+            &copy; 2026 <strong>Official Web Store Purbie</strong>. All Rights Reserved.
+        </p>
+    </footer>
+
+    <!-- JAVASCRIPT INTERAKTIF -->
+    <script>
+        /* --- 1. LOGIKA SLIDER OTOMATIS & INTERAKTIF DI BAGIAN TENTANG PURBIE --- */
+        let currentSlide = 0;
+        const totalSlides = 4;
+        let slideInterval;
+
+        function updateCarouselUI() {
+            const track = document.getElementById("carousel-track");
+            const dots = document.querySelectorAll(".dot");
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle("active", idx === currentSlide);
+            });
+        }
+
+        function moveSlide(direction) {
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            updateCarouselUI();
+            resetAutoSlide();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarouselUI();
+            resetAutoSlide();
+        }
+
+        function startAutoSlide() {
+            slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarouselUI();
+            }, 3000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(slideInterval);
+            startAutoSlide();
+        }
+
+        // Dukungan Swipe Jari di Smartphone untuk Slider
+        const viewport = document.getElementById("carousel-viewport");
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        viewport.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        viewport.addEventListener("touchend", (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 40) {
+                moveSlide(1);
+            } else if (touchEndX - touchStartX > 40) {
+                moveSlide(-1);
+            }
+        }, { passive: true });
+
+        /* --- 2. DATA & LOGIKA KATALOG PRODUK --- */
+        const products = [
+            {
+                id: "original",
+                name: "Gabin Original",
+                tag: "Classic Favorite",
+                price: 6000,
+                priceLabel: "6K",
+                desc: "Rasa autentik olahan ubi ungu murni tanpa isian tambahan. Manis alami, padat, dan super renyah di luar!",
+                img: "Original.png",
+                qty: 0
+            },
+            {
+                id: "cheese",
+                name: "Gabin Cheese (Keju)",
+                tag: "Best Seller",
+                price: 7000,
+                priceLabel: "7K",
+                desc: "Perpaduan manisnya ubi ungu dengan isian keju lumer yang gurih dan melimpah di bagian tengah.",
+                img: "Cheese.png",
+                qty: 0
+            },
+            {
+                id: "chocolate",
+                name: "Gabin Chocolate (Coklat)",
+                tag: "Sweet Melted",
+                price: 7000,
+                priceLabel: "7K",
+                desc: "Sensasi ubi ungu lembut dengan isian coklat lumer premium di dalamnya. Favorit pecinta manis sejati!",
+                img: "Chocolate.png",
+                qty: 0
+            },
+            {
+                id: "greentea",
+                name: "Gabin Green Tea",
+                tag: "Matcha Lovers",
+                price: 7000,
+                priceLabel: "7K",
+                desc: "Aroma khas matcha green tea yang harum dan lumer berpadu sempurna dengan fla ubi ungu crispy.",
+                img: "Greentea.png",
+                qty: 0
+            }
+        ];
+
+        function formatRupiah(num) {
+            return "Rp " + num.toLocaleString("id-ID");
+        }
+
+        function renderProducts() {
+            const container = document.getElementById("product-list");
+            container.innerHTML = products.map((item, index) => `
+                <div class="product-card">
+                    <span class="flavor-tag">${item.tag}</span>
+                    <span class="price-badge">${item.priceLabel}</span>
+                    <div class="product-img-wrapper">
+                        <img src="${item.img}" alt="${item.name}">
+                    </div>
+                    <div class="product-body">
+                        <h3>${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="updateQty(${index}, -1)" aria-label="Kurangi">−</button>
+                            <span class="qty-val" id="qty-${item.id}">${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty(${index}, 1)" aria-label="Tambah">+</button>
+                        </div>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function updateQty(index, change) {
+            if (products[index].qty + change >= 0) {
+                products[index].qty += change;
+                document.getElementById(`qty-${products[index].id}`).innerText = products[index].qty;
+                updateCartSummary();
+            }
+        }
+
+        function updateCartSummary() {
+            const summaryList = document.getElementById("cart-summary-list");
+            const totalPriceEl = document.getElementById("cart-total-price");
+            const navCartCount = document.getElementById("nav-cart-count");
+            const mobileStickyCart = document.getElementById("mobile-sticky-cart");
+            const mobileCartItems = document.getElementById("mobile-cart-items");
+            const mobileCartTotal = document.getElementById("mobile-cart-total");
+
+            const selectedItems = products.filter(p => p.qty > 0);
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            if (selectedItems.length === 0) {
+                summaryList.innerHTML = `<li class="cart-empty">Belum ada varian gabin yang dipilih. Silakan klik tombol (+) pada menu di atas.</li>`;
+                totalPriceEl.innerText = "Rp 0";
+                navCartCount.innerText = "0";
+                mobileStickyCart.classList.remove("show");
+                return;
+            }
+
+            summaryList.innerHTML = selectedItems.map(item => {
+                const subTotal = item.qty * item.price;
+                totalItems += item.qty;
+                totalPrice += subTotal;
+                return `
+                    <li class="cart-item">
+                        <span><strong>${item.qty}x</strong> ${item.name}</span>
+                        <span>${formatRupiah(subTotal)}</span>
+                    </li>
+                `;
+            }).join("");
+
+            totalPriceEl.innerText = formatRupiah(totalPrice);
+            navCartCount.innerText = totalItems;
+
+            // Update Sticky Bar di Smartphone
+            mobileCartItems.innerText = `${totalItems} Produk Dipilih`;
+            mobileCartTotal.innerText = formatRupiah(totalPrice);
+            mobileStickyCart.classList.add("show");
+        }
+
+        function sendOrderToWhatsApp() {
+            const selectedItems = products.filter(p => p.qty > 0);
+            if (selectedItems.length === 0) {
+                alert("Pilih minimal 1 produk Gabin Ubi Ungu terlebih dahulu ya, Purbiestar!");
+                document.getElementById("menu").scrollIntoView();
+                return;
+            }
+
+            const name = document.getElementById("buyer-name").value.trim();
+            const pickupTime = document.getElementById("pickup-time").value;
+            const paymentMethod = document.getElementById("payment-method").value;
+            const adminPhone = document.getElementById("admin-contact").value;
+            const notes = document.getElementById("buyer-notes").value.trim() || "-";
+
+            if (!name) {
+                alert("Mohon isi Nama Lengkap Pemesan terlebih dahulu.");
+                document.getElementById("buyer-name").focus();
+                return;
+            }
+
+            let totalOrderPrice = 0;
+            let orderLines = selectedItems.map(item => {
+                const sub = item.qty * item.price;
+                totalOrderPrice += sub;
+                return `- ${item.name} (${item.qty} pcs x ${formatRupiah(item.price)}) = *${formatRupiah(sub)}*`;
+            }).join("\n");
+
+            const message = 
+`Halo Kak Admin *@purbie._*!
+Saya ingin memesan *Gabin Ubi Ungu*:
+
+*DATA PEMESAN*
+- Nama: 
+${name}
+- Lokasi Ambil: Parkiran Mobil Listrik dekat Landmark PNJ
+- Estimasi Jam Pengambilan: 
+${pickupTime}
+- Metode Pembayaran: 
+${paymentMethod}
+
+*DETAIL PESANAN*
+${orderLines}
+
+*TOTAL BAYAR: ${formatRupiah(totalOrderPrice)}*
+- Catatan: 
+${notes}
+
+Mohon konfirmasi pesanan saya ya Kak. Terima kasih!`;
+
+            const waUrl = `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, "_blank");
+        }
+
+        // Jalankan saat halaman selesai dimuat
+        renderProducts();
+        startAutoSlide();
+    </script>
+</body>
+</html>
